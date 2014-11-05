@@ -1,0 +1,17 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.0
+apiversion: 2
+description: labelim
+author: Your Name
+license: Specify your license
+copyright: Copyright (c) 2014 by Your Company
+
+# these should not be edited
+name: labelim
+moduleid: com.aeroheart.ti.labelim
+guid: 9fd81c41-e68c-4c28-953e-1c8088ba51de
+platform: android
+minsdk: 3.4.0.GA

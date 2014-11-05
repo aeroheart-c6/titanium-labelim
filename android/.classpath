@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/aeroheart-c6/Development/tools/android/sdk/platforms/android-15/android.jar"/>
+	<classpathentry kind="lib" path="/Users/aeroheart-c6/Development/tools/android/sdk/add-ons/addon-google_apis-google-15/libs/maps.jar"/>
+	<classpathentry kind="lib" path="/Users/aeroheart-c6/Library/Application Support/Titanium/mobilesdk/osx/3.4.0.GA/android/titanium.jar"/>
+	<classpathentry kind="lib" path="/Users/aeroheart-c6/Library/Application Support/Titanium/mobilesdk/osx/3.4.0.GA/android/kroll-common.jar"/>
+	<classpathentry kind="lib" path="/Users/aeroheart-c6/Library/Application Support/Titanium/mobilesdk/osx/3.4.0.GA/android/kroll-apt.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
