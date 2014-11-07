@@ -22,14 +22,13 @@ import android.widget.TextView;
 public class Label extends TiUIView {
     protected static final float DEFAULT_SHADOW_RADIUS = 0.5f;
 
-    protected boolean ellipsize = false;
+    protected boolean ellipsize = true;
     protected boolean wordWrap = true;
     protected int defaultColor;
     protected int shadowColor = Color.TRANSPARENT;
     protected float shadowRadius = Label.DEFAULT_SHADOW_RADIUS;
     protected float shadowX = 0f;
     protected float shadowY = 0f;
-    
     
     public Label(final TiViewProxy proxy) {
         super(proxy);
@@ -42,6 +41,10 @@ public class Label extends TiUIView {
         label.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         label.setPadding(0, 0, 0, 0);
         label.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        label.setFocusable(false);
+        label.setSingleLine(false);
+        
+        TiUIHelper.styleText(label, null);
         
         this.defaultColor = label.getCurrentTextColor();
         this.setNativeView(label);
@@ -99,13 +102,12 @@ public class Label extends TiUIView {
         
         if (dict.containsKey(TiC.PROPERTY_ELLIPSIZE)) {
             this.ellipsize = TiConvert.toBoolean(dict, TiC.PROPERTY_ELLIPSIZE, false);
-            view.setEllipsize(this.ellipsize);
+            view.setEllipsized(this.ellipsize);
         }
         
         if (dict.containsKey(TiC.PROPERTY_WORD_WRAP)) {
             this.wordWrap = TiConvert.toBoolean(dict, TiC.PROPERTY_WORD_WRAP, true);
             view.setWordWrap(this.wordWrap);
-            view.setSingleLine(!this.wordWrap);
         }
         
         if (dict.containsKey(TiC.PROPERTY_SHADOW_OFFSET)) {
@@ -132,7 +134,7 @@ public class Label extends TiUIView {
         }
         
         if (dict.containsKey(LabelimConstants.PROPERTY_MAX_LINES))
-            view.setMaxLines(TiConvert.toInt(dict.get(LabelimConstants.PROPERTY_MAX_LINES), android.R.attr.maxLines));
+            view.setMaxLines(TiConvert.toInt(dict.get(LabelimConstants.PROPERTY_MAX_LINES), -1));
         
         if (dict.containsKey(LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY))
             view.setHorizontallyScrolling(TiConvert.toBoolean(dict.get(LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY), false));
@@ -147,54 +149,53 @@ public class Label extends TiUIView {
     @SuppressWarnings("unchecked")
     @Override
     public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy) {
-        LabelTextView tv = (LabelTextView)this.getNativeView();
+        LabelTextView view = (LabelTextView)this.getNativeView();
         
         if (key.equals(TiC.PROPERTY_HTML)) {
-            tv.setText(Html.fromHtml(TiConvert.toString(newValue)));
-            TiUIHelper.linkifyIfEnabled(tv, proxy.getProperty(TiC.PROPERTY_AUTO_LINK));
-            tv.requestLayout();
+            view.setText(Html.fromHtml(TiConvert.toString(newValue)));
+            TiUIHelper.linkifyIfEnabled(view, proxy.getProperty(TiC.PROPERTY_AUTO_LINK));
+            view.requestLayout();
         }
         else if (key.equals(TiC.PROPERTY_TEXT) || key.equals(TiC.PROPERTY_TITLE)) {
-            tv.setText(TiConvert.toString(newValue));
-            TiUIHelper.linkifyIfEnabled(tv, proxy.getProperty(TiC.PROPERTY_AUTO_LINK));
-            tv.requestLayout();
+            view.setText(TiConvert.toString(newValue));
+            TiUIHelper.linkifyIfEnabled(view, proxy.getProperty(TiC.PROPERTY_AUTO_LINK));
+            view.requestLayout();
         }
         else if (key.equals(TiC.PROPERTY_INCLUDE_FONT_PADDING))
-            tv.setIncludeFontPadding(TiConvert.toBoolean(newValue, true));
+            view.setIncludeFontPadding(TiConvert.toBoolean(newValue, true));
         else if (key.equals(TiC.PROPERTY_COLOR)) {
             if (newValue == null)
-                tv.setTextColor(defaultColor);
+                view.setTextColor(defaultColor);
             else
-                tv.setTextColor(TiConvert.toColor((String) newValue));
+                view.setTextColor(TiConvert.toColor((String) newValue));
         }
         else if (key.equals(TiC.PROPERTY_HIGHLIGHTED_COLOR))
-            tv.setHighlightColor(TiConvert.toColor((String) newValue));
+            view.setHighlightColor(TiConvert.toColor((String) newValue));
         else if (key.equals(TiC.PROPERTY_TEXT_ALIGN)) {
-            TiUIHelper.setAlignment(tv, TiConvert.toString(newValue), null);
-            tv.requestLayout();
+            TiUIHelper.setAlignment(view, TiConvert.toString(newValue), null);
+            view.requestLayout();
         }
         else if (key.equals(TiC.PROPERTY_VERTICAL_ALIGN)) {
-            TiUIHelper.setAlignment(tv, null, TiConvert.toString(newValue));
-            tv.requestLayout();
+            TiUIHelper.setAlignment(view, null, TiConvert.toString(newValue));
+            view.requestLayout();
         }
         else if (key.equals(TiC.PROPERTY_FONT)) {
             @SuppressWarnings("rawtypes")
             HashMap hash = (HashMap)newValue;
             
-            TiUIHelper.styleText(tv, hash);
-            tv.requestLayout();
+            TiUIHelper.styleText(view, hash);
+            view.requestLayout();
         }
         else if (key.equals(TiC.PROPERTY_ELLIPSIZE)) {
             ellipsize = TiConvert.toBoolean(newValue, false);
-            tv.setEllipsize(ellipsize);
+            view.setEllipsized(ellipsize);
         }
         else if (key.equals(TiC.PROPERTY_WORD_WRAP)) {
             wordWrap = TiConvert.toBoolean(newValue, true);
-            tv.setWordWrap(wordWrap);
-            tv.setSingleLine(!wordWrap);
+            view.setWordWrap(wordWrap);
         }
         else if (key.equals(TiC.PROPERTY_AUTO_LINK))
-            Linkify.addLinks(tv, TiConvert.toInt(newValue));
+            Linkify.addLinks(view, TiConvert.toInt(newValue));
         else if (key.equals(TiC.PROPERTY_SHADOW_OFFSET)) {
             if (newValue instanceof HashMap) {
                 @SuppressWarnings("rawtypes")
@@ -203,21 +204,21 @@ public class Label extends TiUIView {
                 this.shadowX = TiConvert.toFloat(dict.get(TiC.PROPERTY_X), 0);
                 this.shadowY = TiConvert.toFloat(dict.get(TiC.PROPERTY_Y), 0);
                 
-                tv.setShadowLayer(this.shadowRadius, this.shadowX, this.shadowY, this.shadowColor);
+                view.setShadowLayer(this.shadowRadius, this.shadowX, this.shadowY, this.shadowColor);
             }
         }
         else if (key.equals(TiC.PROPERTY_SHADOW_RADIUS)) {
             this.shadowRadius = TiConvert.toFloat(newValue, DEFAULT_SHADOW_RADIUS);
-            tv.setShadowLayer(shadowRadius, shadowX, shadowY, shadowColor);
+            view.setShadowLayer(shadowRadius, shadowX, shadowY, shadowColor);
         }
         else if (key.equals(TiC.PROPERTY_SHADOW_COLOR)) {
             this.shadowColor = TiConvert.toColor(TiConvert.toString(newValue));
-            tv.setShadowLayer(shadowRadius, shadowX, shadowY, shadowColor);
+            view.setShadowLayer(shadowRadius, shadowX, shadowY, shadowColor);
         }
         else if (key.equals(LabelimConstants.PROPERTY_MAX_LINES))
-            tv.setMaxLines(TiConvert.toInt(newValue));
+            view.setMaxLines(TiConvert.toInt(newValue));
         else if (key.equals(LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY))
-            tv.setHorizontallyScrolling(TiConvert.toBoolean(newValue));
+            view.setHorizontallyScrolling(TiConvert.toBoolean(newValue));
         else
             super.propertyChanged(key, oldValue, newValue, proxy);
     }
