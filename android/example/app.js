@@ -9,24 +9,24 @@ var Labelim = require('com.aeroheart.ti.labelim');
 var win = Ti.UI.createWindow({
     backgroundColor:'white'
 });
-win.open();
 
-if (Titanium.Platform.name == "android") {
-    var label = Labelim.createLabel({
-        maxLines          : 2,
-        ellipsize         : true,
-        scrollHorizontally: false,
-        text              : ''
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-            .concat('The quick brown fox jumps over the lazy dog')
-    });
-    
-    win.add(label);
-}
+var label = Labelim.createLabel({
+    maxLines          : 2,
+    ellipsize         : true,
+    scrollHorizontally: false,
+    text              : ''
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+        .concat('The quick brown fox jumps over the lazy dog')
+});
+
+win.add(label);
+
+
+win.open();
