@@ -5,3 +5,6 @@ Label Improved. Attempts to address the following issues:
 
 * ellipsis Android's label when there are multiple lines especially for the Android 4.x series
 * some lacking properties on Titanium's API when interacting with Android's TextView widget
+
+
+Ellipsis logic heavily based from [barone](https://github.com/triposo/barone) repository.
