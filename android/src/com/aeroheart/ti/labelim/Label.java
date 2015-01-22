@@ -139,6 +139,11 @@ public class Label extends TiUIView {
         if (dict.containsKey(LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY))
             view.setHorizontallyScrolling(TiConvert.toBoolean(dict.get(LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY), false));
         
+        if(dict.containsKey(LabelimConstants.PROPERTY_LINE_SPACING_EXTRA) && 
+           dict.containsKey(LabelimConstants.PROPERTY_LINE_SPACING_MULTIPLIER))
+            view.setLineSpacing(TiConvert.toFloat(dict.get(LabelimConstants.PROPERTY_LINE_SPACING_EXTRA)),
+                                TiConvert.toFloat(dict.get(LabelimConstants.PROPERTY_LINE_SPACING_MULTIPLIER)));
+            
         if (needShadow)
             view.setShadowLayer(this.shadowRadius, this.shadowX, this.shadowY, this.shadowColor);
         

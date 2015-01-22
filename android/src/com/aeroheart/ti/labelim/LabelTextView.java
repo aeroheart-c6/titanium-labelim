@@ -94,6 +94,12 @@ public class LabelTextView extends TextView {
     }
     
     @Override
+    public void setLineSpacing(float add, float mult) {
+        super.setLineSpacing(add, mult);
+        this.stale = true;
+    }
+    
+    @Override
     public void setMaxLines(int lines) {
         super.setMaxLines(lines);
         this.lines = lines;

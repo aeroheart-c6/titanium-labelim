@@ -27,7 +27,10 @@ import android.app.Activity;
     TiC.PROPERTY_SHADOW_RADIUS,
     TiC.PROPERTY_INCLUDE_FONT_PADDING,
     LabelimConstants.PROPERTY_MAX_LINES,
-    LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY
+    LabelimConstants.PROPERTY_SCROLL_HORIZONTALLY,
+    LabelimConstants.PROPERTY_LINE_SPACING_EXTRA,
+    LabelimConstants.PROPERTY_LINE_SPACING_MULTIPLIER,
+    
 })
 public class LabelProxy extends TiViewProxy {
     public LabelProxy() {
